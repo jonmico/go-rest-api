@@ -20,17 +20,17 @@ func main() {
 	server.Run(":8080")
 }
 
-func getEvents(context *gin.Context) {
+func getEvents(c *gin.Context) {
 	events, err := models.GetAllEvents()
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "could not fetch events. try again later",
 		})
 		return
 	}
 
-	context.JSON(http.StatusOK, events)
+	c.JSON(http.StatusOK, events)
 }
 
 func getEvent(c *gin.Context) {
@@ -43,6 +43,14 @@ func getEvent(c *gin.Context) {
 		return
 	}
 
+	event, err := models.GetEventById(id)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch event"})
+		return
+	}
+
+	c.JSON(http.StatusOK, event)
 }
 
 func createEvent(c *gin.Context) {
