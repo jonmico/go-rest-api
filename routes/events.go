@@ -76,23 +76,21 @@ func updateEvent(c *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(id)
+	event, err := models.GetEventById(id)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch event"})
 		return
 	}
 
-	var updatedEvent models.Event
-	err = c.ShouldBindJSON(&updatedEvent)
+	err = c.ShouldBindJSON(event)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data."})
 		return
 	}
 
-	updatedEvent.ID = id
-	err = updatedEvent.Update()
+	err = event.Update()
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "could not update event"})
