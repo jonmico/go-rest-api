@@ -24,5 +24,5 @@ func signup(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "user created", "user": user})
+	c.JSON(http.StatusCreated, gin.H{"message": "user created"})
 }
