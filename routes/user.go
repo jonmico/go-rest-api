@@ -26,3 +26,9 @@ func signup(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"message": "user created"})
 }
+
+func login(c *gin.Context) {
+	var user models.User
+
+	err := c.ShouldBindJSON(&user)
+}
